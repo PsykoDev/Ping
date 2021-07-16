@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Win32;
+using System;
 using System.Diagnostics;
 using System.IO;
 using System.Net.NetworkInformation;
@@ -111,15 +112,28 @@ namespace Ping {
         }
 
         private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            Process.Start("https://ping.canbeuseful.com/");
+            OpenURL("https://ping.canbeuseful.com/");
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            Process.Start("https://www.nperf.com/en/");
+            OpenURL("https://www.nperf.com/en/");
         }
 
         private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
-            Process.Start("https://www.speedtest.net/");
+            OpenURL("https://www.speedtest.net/");
+
+        }
+
+        private void OpenURL(string url) {
+            string key = @"htmlfile\shell\open\command";
+            RegistryKey registryKey = Registry.ClassesRoot.OpenSubKey(key, false);
+            // Get the default browser path on the system
+            string Default_Browser_Path = ((string)registryKey.GetValue(null, null)).Split('"')[1];
+
+            Process p = new Process();
+            p.StartInfo.FileName = Default_Browser_Path;
+            p.StartInfo.Arguments = url;
+            p.Start();
         }
     }
 }
