@@ -33,6 +33,11 @@ namespace Ping {
             wr.Close();
         }
 
+        private void richTextBox1_TextChanged(object sender, EventArgs e) {
+            richTextBox1.SelectionStart = richTextBox1.Text.Length;
+            richTextBox1.ScrollToCaret();
+        }
+
         private void button1_Click(object sender, EventArgs e) {
             if(checkBox1.Checked) {
                 timer1.Start();
@@ -50,9 +55,11 @@ namespace Ping {
             r = p.Send(s, timeout, buffer);
             if(r.Status == IPStatus.Success) {
                 richTextBox1.AppendText(Environment.NewLine + " Successful" + " Response delay = " + r.RoundtripTime.ToString() + " ms");
+                richTextBox1.ScrollToCaret();
                 count++;
             } else if(r.Status == IPStatus.TimedOut) {
                 richTextBox1.AppendText(Environment.NewLine + "TIMED OUT");
+                richTextBox1.ScrollToCaret();
             }
             if(r.RoundtripTime > int.Parse(label6.Text)) {
                 label6.Text = r.RoundtripTime.ToString();
@@ -89,9 +96,11 @@ namespace Ping {
             r = p.Send(s, timeout, buffer);
             if(r.Status == IPStatus.Success) {
                 richTextBox1.AppendText(Environment.NewLine + " Successful" + " Response delay = " + r.RoundtripTime.ToString() + " ms");
+                richTextBox1.ScrollToCaret();
                 count++;
             } else if(r.Status == IPStatus.TimedOut) {
                 richTextBox1.AppendText(Environment.NewLine + "TIMED OUT");
+                richTextBox1.ScrollToCaret();
             }
             if(r.RoundtripTime > int.Parse(label6.Text)) {
                 label6.Text = r.RoundtripTime.ToString();
@@ -127,9 +136,7 @@ namespace Ping {
         private void OpenURL(string url) {
             string key = @"htmlfile\shell\open\command";
             RegistryKey registryKey = Registry.ClassesRoot.OpenSubKey(key, false);
-            // Get the default browser path on the system
             string Default_Browser_Path = ((string)registryKey.GetValue(null, null)).Split('"')[1];
-
             Process p = new Process();
             p.StartInfo.FileName = Default_Browser_Path;
             p.StartInfo.Arguments = url;
