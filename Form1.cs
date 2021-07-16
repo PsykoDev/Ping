@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Net.NetworkInformation;
 using System.Text;
@@ -107,6 +108,18 @@ namespace Ping {
         }
 
         private void comboBox1_SelectedIndexChanged(object sender, EventArgs e) {
+        }
+
+        private void linkLabel3_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            Process.Start("https://ping.canbeuseful.com/");
+        }
+
+        private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            Process.Start("https://www.nperf.com/en/");
+        }
+
+        private void linkLabel2_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e) {
+            Process.Start("https://www.speedtest.net/");
         }
     }
 }
